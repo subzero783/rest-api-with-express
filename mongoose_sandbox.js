@@ -54,21 +54,43 @@ db.once('open', ()=>{
 
     var animal = new Animal({});
 
-    Animal.remove({}, (err)=>{
-        elephant.save((err)=>{
-            if(err){
-                console.error('Save Failed.', err);
-            }else{
-                console.log('Saved!');
-            }
-
-            
-
-            db.close(()=>{
-                console.log('db connection closed!');
-            });
-        });
+    var whale = new Animal({
+        type: 'whale',
+        size: 'big', 
+        mass: 190500,
+        name: 'Fig'
     });
 
+    // elephant.save((err)=>{
+    //     if(err){
+    //         console.error('Save Failed.', err);
+    //     }else{
+    //         console.log('Saved!');
+    //     }
+
+    //     db.close(()=>{
+    //         console.log('db connection closed!');
+    //     });
+    // });
+
+    // whale.save((err)=>{
+    //     if(err){
+    //         console.error('Save Failed.', err);
+    //     }else{
+    //         console.log('Saved!');
+    //     }
+
+    //     db.close(()=>{
+    //         console.log('db connection closed!');
+    //     });
+    // });
+
+    Animal.find({
+        size: 'big'
+    }, (err, animals)=>{
+        animals.forEach((animal)=>{
+            console.log(animal.name + ' the ' + animal.color + ' ' + animal.type);
+        });
+    });
 
 });
