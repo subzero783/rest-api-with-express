@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import { MongoClient } from 'mongodb';
 import path from 'path';
 import logger from 'morgan';
+import mongoose from 'mongoose';
 
 import routes from './routes';
 
@@ -13,6 +14,21 @@ const app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
+
+mongoose.connect('mongodb://localhost:27017/sandbox', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true  
+});
+
+const db = mongoose.connection;
+
+db.on('error', (err)=>{
+    console.error('connection error: ', err);
+});
+
+db.once('open', ()=>{
+    console.log('db connection successful');
+});
 
 app.use('/questions', routes);
 
